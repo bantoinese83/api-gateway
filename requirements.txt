@@ -1,0 +1,16 @@
+fastapi~=0.115.6
+uvicorn~=0.34.0
+httpx~=0.28.1
+python-dotenv~=1.0.1
+tenacity~=9.0.0
+pyjwt~=2.9.0
+fastapi-limiter
+cachetools~=5.5.0
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-exporter-jaeger
+pydantic~=2.10.5
+aioredis~=2.0.1
+redis~=5.3.0b4
+loguru~=0.7.3
+pytest~=8.3.4
