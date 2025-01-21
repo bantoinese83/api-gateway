@@ -4,7 +4,10 @@ app = FastAPI()
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    return {
+        "service_a_healthy": True,
+        "service_b_healthy": True
+    }
 
 @app.get("/some-path")
 async def get_some_path():

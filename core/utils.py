@@ -27,8 +27,11 @@ async def forward_request(url: str, method: str, headers: dict, data: dict = Non
             )
             response.raise_for_status()
             # Cache the response
-            cache[url] = response.json()
-            return response.json(), response.status_code
+            if response.content:
+                cache[url] = response.json()
+                return response.json(), response.status_code
+            else:
+                return {}, response.status_code
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 404:
             raise HTTPException(status_code=404, detail=f"Error communicating with upstream: {e}")
