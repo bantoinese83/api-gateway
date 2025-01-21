@@ -1,21 +1,21 @@
-# API Gateway
+# API Gateway ![License](https://img.shields.io/badge/license-MIT-blue) ![Python](https://img.shields.io/badge/python-3.12%2B-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-API%20Gateway-green) ![Redis](https://img.shields.io/badge/Redis-6.2.5-red) ![Jaeger](https://img.shields.io/badge/Jaeger-1.41.0-orange) ![Build](https://img.shields.io/github/actions/workflow/status/bantoinese83/api-gateway/ci.yml) ![Coverage](https://img.shields.io/codecov/c/github/bantoinese83/api-gateway)
 
-This project is an API Gateway built using FastAPI. It forwards requests to downstream services and includes features
+🚀 This project is an API Gateway built using FastAPI. It forwards requests to downstream services and includes features
 such as rate limiting, authentication, logging, and tracing.
 
 ## Features
 
-- **Rate Limiting**: Limits the number of requests to prevent abuse.
-- **Authentication**: JWT-based authentication to secure endpoints.
-- **Logging**: Logs request and response information.
-- **Tracing**: Traces requests using Jaeger for distributed tracing.
-- **Health Checks**: Checks the health of downstream services.
+- 🚦 **Rate Limiting**: Limits the number of requests to prevent abuse.
+- 🔒 **Authentication**: JWT-based authentication to secure endpoints.
+- 📜 **Logging**: Logs request and response information.
+- 🔍 **Tracing**: Traces requests using Jaeger for distributed tracing.
+- 🩺 **Health Checks**: Checks the health of downstream services.
 
 ## Requirements
 
-- Python 3.12+
-- Redis
-- Jaeger
+- 🐍 Python 3.12+
+- 🛠️ Redis
+- 🕵️ Jaeger
 
 ## Installation
 
@@ -69,6 +69,18 @@ such as rate limiting, authentication, logging, and tracing.
     uvicorn src.main:app --host 0.0.0.0 --port 8080
     ```
 
+### Start All Services
+
+```sh
+  ./run_all.sh
+```
+
+### Stop All Services
+
+```sh
+  ./run_all.sh stop
+```
+
 ## Running Tests
 
 1. Install test dependencies:
@@ -83,14 +95,27 @@ such as rate limiting, authentication, logging, and tracing.
 
 ## Usage
 
-- **Health Check**: `GET /health`
-- **Read Item**: `GET /items/{item_id}`
-- **Gateway Endpoints**:
-    - `GET /service-a/some-path`
-    - `POST /service-a/some-path`
-    - `PUT /service-a/some-path`
-    - `DELETE /service-a/some-path`
-    - `PATCH /service-a/some-path`
+### Health Check
+
+| Method | Endpoint |
+|--------|----------|
+| GET    | /health  |
+
+### Read Item
+
+| Method | Endpoint         |
+|--------|------------------|
+| GET    | /items/{item_id} |
+
+### Gateway Endpoints
+
+| Method | Endpoint             |
+|--------|----------------------|
+| GET    | /service-a/some-path |
+| POST   | /service-a/some-path |
+| PUT    | /service-a/some-path |
+| DELETE | /service-a/some-path |
+| PATCH  | /service-a/some-path |
 
 ## Configuration
 
@@ -99,3 +124,10 @@ Configuration is managed through environment variables. Refer to the `docs/.env`
 ## License
 
 This project is licensed under the MIT License.
+
+## Running All Services
+
+You can use the `run_all.sh` script to start and stop all services.
+
+### Start All Services
+

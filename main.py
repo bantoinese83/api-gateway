@@ -10,10 +10,11 @@ from fastapi_limiter.depends import RateLimiter
 from loguru import logger
 from pydantic import BaseModel
 
-from config import config
-from middleware import logging_middleware, tracing_middleware, transform_request_middleware
-from security import authenticate
-from utils import forward_request, check_service_health
+from core.middleware import logging_middleware, tracing_middleware, transform_request_middleware
+from core.security import authenticate
+from core.utils import forward_request, check_service_health
+
+from config.config import config
 
 
 @asynccontextmanager

@@ -12,7 +12,7 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.semconv.resource import ResourceAttributes
 
-from config import config
+from config.config import config
 
 # Initialize Jaeger Tracer
 resource = Resource(attributes={

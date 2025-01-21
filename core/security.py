@@ -1,7 +1,8 @@
 from fastapi import HTTPException, Header
 import jwt
-from config import config
 from typing import Optional
+
+from config.config import config
 
 
 def authenticate(authorization: Optional[str] = Header(None)):
