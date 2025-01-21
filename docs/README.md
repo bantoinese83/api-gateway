@@ -16,6 +16,7 @@ such as rate limiting, authentication, logging, and tracing.
 - 🐍 Python 3.12+
 - 🛠️ Redis
 - 🕵️ Jaeger
+- 🗄️ Consul
 
 ## Installation
 
@@ -41,7 +42,7 @@ such as rate limiting, authentication, logging, and tracing.
     cp docs/.env.example docs/.env
     ```
 
-5. Update the `docs/.env` file with your configuration.
+5. Update the `.env` file with your configuration.
 
 ## Running the Services
 
@@ -55,7 +56,12 @@ such as rate limiting, authentication, logging, and tracing.
     jaeger-all-in-one &
     ```
 
-3. Start the downstream services:
+3. Start Consul:
+    ```sh
+    consul agent -dev -bind=127.0.0.1 -client=127.0.0.1 &
+    ```
+
+4. Start the downstream services:
     ```sh
     cd service-a
     uvicorn main:app --host 0.0.0.0 --port 8001 &
@@ -64,7 +70,7 @@ such as rate limiting, authentication, logging, and tracing.
     cd ..
     ```
 
-4. Start the API Gateway:
+5. Start the API Gateway:
     ```sh
     uvicorn src.main:app --host 0.0.0.0 --port 8080
     ```

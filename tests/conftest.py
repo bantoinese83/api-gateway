@@ -1,9 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
+from unittest.mock import patch
 
 from config.config import config
 from main import app
-
 
 @pytest.fixture(scope="session")
 def event_loop():
@@ -35,3 +35,11 @@ async def client(setup_limiter):
     """
     await setup_limiter
     return TestClient(app)
+
+@pytest.fixture(scope="session", autouse=True)
+def mock_discover_services():
+    """
+    Mock the discover_services method to avoid actual network calls during testing.
+    """
+    with patch.object(config, 'discover_services', return_value=None):
+        yield
