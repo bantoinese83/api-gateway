@@ -155,3 +155,10 @@ def test_gateway_post_missing_required_fields(client):
         assert response.json() == {"message": "POST request to service-a", "data": {}}
     else:
         assert response.json() == {}
+
+
+def test_too_little_data_for_declared_content_length_error(client):
+    headers = {"Authorization": get_auth_token(), "Content-Length": "100"}
+    response = client.post("/service-a/some-path", headers=headers)
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Too little data for declared Content-Length"}

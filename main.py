@@ -16,6 +16,7 @@ from core.security import authenticate
 from core.utils import forward_request, check_service_health
 
 from redis.asyncio import Redis
+import h11
 
 
 @asynccontextmanager
@@ -80,6 +81,15 @@ async def health_check():
     service_a_healthy = await check_service_health(url=f"{config.SERVICE_A_URL}{config.HEALTH_CHECK_SERVICE_A}")
     service_b_healthy = await check_service_health(url=f"{config.SERVICE_B_URL}{config.HEALTH_CHECK_SERVICE_B}")
     return ServiceHealthResponse(service_a_healthy=service_a_healthy, service_b_healthy=service_b_healthy)
+
+
+@app.exception_handler(h11._util.LocalProtocolError)
+async def local_protocol_error_handler(request: Request, exc: h11._util.LocalProtocolError):
+    logger.error(f"LocalProtocolError: {exc}")
+    return JSONResponse(
+        status_code=400,
+        content={"detail": "Too little data for declared Content-Length"},
+    )
 
 
 @app.api_route("/{path:path}", methods=["GET"], operation_id="gateway_get")
