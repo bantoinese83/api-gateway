@@ -34,7 +34,7 @@ such as rate limiting, authentication, logging, and tracing.
 
 3. Install the dependencies:
     ```sh
-    pip install -r docs/requirements.txt
+    pip install -r requirements.txt
     ```
 
 4. Set up environment variables:
