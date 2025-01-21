@@ -63,7 +63,6 @@ def test_health_check_returns_service_status(client):
         assert response.json() == {}
 
 
-
 def test_gateway_get_returns_200_or_404(client):
     headers = {"Authorization": get_auth_token()}
     response = client.get("/service-a/some-path", headers=headers)

@@ -17,6 +17,7 @@ from core.utils import forward_request, check_service_health
 
 from redis.asyncio import Redis
 import h11
+from fastapi.responses import JSONResponse
 
 
 @asynccontextmanager
