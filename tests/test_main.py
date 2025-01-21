@@ -71,73 +71,91 @@ def test_gateway_get_returns_200_or_404(client):
     headers = {"Authorization": get_auth_token()}
     response = client.get("/service-a/some-path", headers=headers)
     assert response.status_code in [200, 404]
+    if response.status_code == 200:
+        assert response.json() == {"message": "This is service-a"}
 
 
 def test_gateway_post_returns_200_or_404(client):
     headers = {"Authorization": get_auth_token()}
     response = client.post("/service-a/some-path", json={"key": "value"}, headers=headers)
     assert response.status_code in [200, 404]
+    if response.status_code == 200:
+        assert response.json() == {"message": "POST request to service-a", "data": {"key": "value"}}
 
 
 def test_gateway_put_returns_200_or_404(client):
     headers = {"Authorization": get_auth_token()}
     response = client.put("/service-a/some-path", json={"key": "value"}, headers=headers)
     assert response.status_code in [200, 404]
+    if response.status_code == 200:
+        assert response.json() == {"message": "PUT request to service-a", "data": {"key": "value"}}
 
 
 def test_gateway_delete_returns_200_or_404(client):
     headers = {"Authorization": get_auth_token()}
     response = client.delete("/service-a/some-path", headers=headers)
     assert response.status_code in [200, 404]
+    if response.status_code == 200:
+        assert response.json() == {"message": "DELETE request to service-a"}
 
 
 def test_gateway_patch_returns_200_or_404(client):
     headers = {"Authorization": get_auth_token()}
     response = client.patch("/service-a/some-path", json={"key": "value"}, headers=headers)
     assert response.status_code in [200, 404]
+    if response.status_code == 200:
+        assert response.json() == {"message": "PATCH request to service-a", "data": {"key": "value"}}
 
 
 def test_gateway_get_returns_401_for_missing_auth(client):
     response = client.get("/service-a/some-path")
     assert response.status_code == 401
+    assert response.json() == {"detail": "Authorization header missing"}
 
 
 def test_gateway_post_returns_401_for_missing_auth(client):
     response = client.post("/service-a/some-path", json={"key": "value"})
     assert response.status_code == 401
+    assert response.json() == {"detail": "Authorization header missing"}
 
 
 def test_gateway_put_returns_401_for_missing_auth(client):
     response = client.put("/service-a/some-path", json={"key": "value"})
     assert response.status_code == 401
+    assert response.json() == {"detail": "Authorization header missing"}
 
 
 def test_gateway_delete_returns_401_for_missing_auth(client):
     response = client.delete("/service-a/some-path")
     assert response.status_code == 401
+    assert response.json() == {"detail": "Authorization header missing"}
 
 
 def test_gateway_patch_returns_401_for_missing_auth(client):
     response = client.patch("/service-a/some-path", json={"key": "value"})
     assert response.status_code == 401
+    assert response.json() == {"detail": "Authorization header missing"}
 
 
 def test_gateway_invalid_path(client):
     headers = {"Authorization": get_auth_token()}
     response = client.get("/invalid-path", headers=headers)
     assert response.status_code == 404  # Not Found
+    assert response.json() == {"detail": "Service not found"}
 
 
 def test_gateway_invalid_method(client):
     headers = {"Authorization": get_auth_token()}
     response = client.head("/service-a/some-path", headers=headers)
     assert response.status_code == 405
+    assert response.json() == {"detail": "Method Not Allowed"}
 
 
 def test_gateway_invalid_service(client):
     headers = {"Authorization": get_auth_token()}
     response = client.get("/service-c/some-path", headers=headers)
     assert response.status_code == 404  # Not Found
+    assert response.json() == {"detail": "Service not found"}
 
 
 def test_gateway_get_missing_required_fields(client):
