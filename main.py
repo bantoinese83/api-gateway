@@ -15,6 +15,8 @@ from core.middleware import logging_middleware, tracing_middleware, transform_re
 from core.security import authenticate
 from core.utils import forward_request, check_service_health
 
+from redis.asyncio import Redis
+
 
 @asynccontextmanager
 async def lifespan(app_instance: FastAPI):
