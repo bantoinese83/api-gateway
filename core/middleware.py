@@ -81,7 +81,6 @@ async def tracing_middleware(request: Request, call_next):
         span.set_attribute("http.status_code", response.status_code)
         return response
 
-
 async def transform_request_middleware(request: Request, call_next: Callable):
     """
     Example of request transformation middleware. You can add more sophisticated logic here.
