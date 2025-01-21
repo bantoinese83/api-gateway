@@ -138,11 +138,11 @@ def test_gateway_get_missing_required_fields(client):
     headers = {"Authorization": get_auth_token()}
     response = client.get("/service-a/some-path", headers=headers)
     assert response.status_code == 200
-    assert response.json() is not None
+    assert response.json() is not None or response.json() == {}
 
 
 def test_gateway_post_missing_required_fields(client):
     headers = {"Authorization": get_auth_token()}
     response = client.post("/service-a/some-path", json={}, headers=headers)
     assert response.status_code == 200
-    assert response.json() is not None
+    assert response.json() is not None or response.json() == {}
