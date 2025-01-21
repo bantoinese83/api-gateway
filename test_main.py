@@ -1,8 +1,8 @@
 import jwt
 import pytest
 from fastapi.testclient import TestClient
-from config import config
-from main import app
+from src.config import config
+from src.main import app
 
 @pytest.fixture
 def client():
