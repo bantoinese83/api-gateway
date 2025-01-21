@@ -2,25 +2,24 @@ from contextlib import asynccontextmanager
 from json import JSONDecodeError
 from typing import Optional
 
-import redis.asyncio as redis
 from cachetools import TTLCache
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi_limiter import FastAPILimiter
 from fastapi_limiter.depends import RateLimiter
 from loguru import logger
 from pydantic import BaseModel
+from redis import Redis
 
+from config.config import config
 from core.middleware import logging_middleware, tracing_middleware, transform_request_middleware
 from core.security import authenticate
 from core.utils import forward_request, check_service_health
-
-from config.config import config
 
 
 @asynccontextmanager
 async def lifespan(app_instance: FastAPI):
     # Setup Redis client
-    redis_client = redis.from_url(config.REDIS_URL)
+    redis_client = Redis.from_url(config.REDIS_URL)
     # Setup Rate Limiting
     await FastAPILimiter.init(redis_client)
     yield

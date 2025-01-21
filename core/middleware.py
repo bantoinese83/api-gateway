@@ -33,10 +33,17 @@ async def logging_middleware(request: Request, call_next):
     Logs request and response info.
     """
     start_time = time.time()
-    response = await call_next(request)
-    process_time = time.time() - start_time
-    logging.info(
-        f"Request: {request.method} {request.url} | Status: {response.status_code} | Process Time: {process_time:.4f}s")
+    response = None
+    try:
+        response = await call_next(request)
+    except Exception as e:
+        logging.error(f"Error processing request: {e}")
+        raise
+    finally:
+        process_time = time.time() - start_time
+        logging.info(
+            f"Request: {request.method} {request.url} | Status: {response.status_code if response else 'N/A'} | Process Time: {process_time:.4f}s"
+        )
     return response
 
 
