@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-
+from config import config
 from main import app
 
 
@@ -28,8 +28,9 @@ async def setup_limiter():
     await redis.close()
 
 @pytest.fixture(scope="session")
-def client(setup_limiter):
+async def client(setup_limiter):
     """
     Initialize a test client with FastAPILimiter initialized in a test fixture.
     """
+    await setup_limiter
     return TestClient(app)

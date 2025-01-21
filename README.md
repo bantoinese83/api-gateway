@@ -1,6 +1,7 @@
 # API Gateway
 
-This project is an API Gateway built using FastAPI. It forwards requests to downstream services and includes features such as rate limiting, authentication, logging, and tracing.
+This project is an API Gateway built using FastAPI. It forwards requests to downstream services and includes features
+such as rate limiting, authentication, logging, and tracing.
 
 ## Features
 
@@ -85,11 +86,11 @@ This project is an API Gateway built using FastAPI. It forwards requests to down
 - **Health Check**: `GET /health`
 - **Read Item**: `GET /items/{item_id}`
 - **Gateway Endpoints**:
-  - `GET /service-a/some-path`
-  - `POST /service-a/some-path`
-  - `PUT /service-a/some-path`
-  - `DELETE /service-a/some-path`
-  - `PATCH /service-a/some-path`
+    - `GET /service-a/some-path`
+    - `POST /service-a/some-path`
+    - `PUT /service-a/some-path`
+    - `DELETE /service-a/some-path`
+    - `PATCH /service-a/some-path`
 
 ## Configuration
 
