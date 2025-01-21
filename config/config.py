@@ -1,6 +1,7 @@
 import os
 import secrets
 from dotenv import load_dotenv
+from consul import Consul
 
 load_dotenv()
 
@@ -32,4 +33,17 @@ class Config:
     # Redis URL
     REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
+    def __init__(self):
+        self.consul = Consul()
+
+    def discover_services(self):
+        index, services = self.consul.catalog.services()
+        service_a = services.get('service-a')
+        service_b = services.get('service-b')
+        if service_a:
+            self.SERVICE_A_URL = f"http://{service_a[0]['ServiceAddress']}:{service_a[0]['ServicePort']}"
+        if service_b:
+            self.SERVICE_B_URL = f"http://{service_b[0]['ServiceAddress']}:{service_b[0]['ServicePort']}"
+
 config = Config()
+config.discover_services()
