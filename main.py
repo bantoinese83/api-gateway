@@ -134,7 +134,10 @@ async def gateway(path: str, request: Request, auth_payload: dict = Depends(auth
 
     logger.debug(f"📤 Forwarded request to {url}, status code: {status_code}")
 
-    return response_data, status_code
+    if not response_data:
+        response_data = {}
+
+    return JSONResponse(content=response_data, status_code=status_code)
 
 
 if __name__ == "__main__":
