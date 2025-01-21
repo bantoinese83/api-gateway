@@ -127,13 +127,92 @@ such as rate limiting, authentication, logging, and tracing.
 
 Configuration is managed through environment variables. Refer to the `docs/.env` file for available settings.
 
-## License
+## Middleware
 
-This project is licensed under the MIT License.
+### Logging Middleware
 
-## Running All Services
+The logging middleware logs request and response information, including method, URL, status code, headers, and body (for POST, PUT, and PATCH requests). It also logs the processing time for each request.
 
-You can use the `run_all.sh` script to start and stop all services.
+### Tracing Middleware
 
-### Start All Services
+The tracing middleware creates spans for each request to be logged in a tracing engine like Jaeger. It sets attributes such as HTTP method, URL, and status code.
 
+### Transform Request Middleware
+
+The transform request middleware is an example of request transformation middleware. It adds a `transformed` field to the request body for POST requests to `/service-b`.
+
+## Security
+
+### Authentication
+
+The authentication function authenticates the JWT token provided in the `Authorization` header. It raises an HTTP 401 error if the token is missing, expired, or invalid.
+
+## Utility Functions
+
+### Forward Request
+
+The `forward_request` function forwards the request to the specified URL. It includes retry logic and a circuit breaker to handle failures. The response is cached for future requests.
+
+### Check Service Health
+
+The `check_service_health` function performs a health check for a given service by sending a GET request to the service's health endpoint.
+
+## Project Structure
+
+```
+api-gateway/
+├── config/
+│   └── config.py
+├── core/
+│   ├── middleware.py
+│   ├── security.py
+│   └── utils.py
+├── docs/
+│   ├── .env.example
+│   └── README.md
+├── services/
+│   ├── service_a/
+│   │   └── main.py
+│   └── service_b/
+│       └── main.py
+├── tests/
+│   ├── conftest.py
+│   └── test_main.py
+├── .env
+├── .gitignore
+├── main.py
+├── pytest.ini
+├── requirements.txt
+└── run_all.sh
+```
+
+- `config/`: Contains configuration files.
+- `core/`: Contains core functionality such as middleware, security, and utility functions.
+- `docs/`: Contains documentation files.
+- `services/`: Contains downstream services.
+- `tests/`: Contains test files.
+- `.env`: Environment variables file.
+- `.gitignore`: Git ignore file.
+- `main.py`: Main entry point for the API Gateway.
+- `pytest.ini`: Pytest configuration file.
+- `requirements.txt`: Python dependencies file.
+- `run_all.sh`: Script to start and stop all services.
+
+## Contributing
+
+We welcome contributions to the project! Please follow these guidelines when submitting issues and pull requests:
+
+1. Fork the repository and create a new branch for your feature or bugfix.
+2. Write tests for your changes.
+3. Ensure all tests pass.
+4. Submit a pull request with a clear description of your changes.
+
+## Deployment
+
+To deploy the API Gateway to a production environment, follow these steps:
+
+1. Set up a production-ready environment with the required dependencies (Python, Redis, Jaeger, Consul).
+2. Configure environment variables in the `.env` file.
+3. Use a process manager like `supervisord` or `systemd` to manage the API Gateway process.
+4. Set up a reverse proxy (e.g., Nginx) to handle incoming requests and forward them to the API Gateway.
+5. Monitor the API Gateway using tools like Prometheus and Grafana for metrics and alerts.
