@@ -44,6 +44,20 @@ async def logging_middleware(request: Request, call_next):
         logging.info(
             f"Request: {request.method} {request.url} | Status: {response.status_code if response else 'N/A'} | Process Time: {process_time:.4f}s"
         )
+        logging.info(f"Request Headers: {dict(request.headers)}")
+        if request.method in ["POST", "PUT", "PATCH"]:
+            try:
+                request_body = await request.json()
+                logging.info(f"Request Body: {request_body}")
+            except Exception as e:
+                logging.error(f"Error reading request body: {e}")
+        if response:
+            logging.info(f"Response Headers: {dict(response.headers)}")
+            try:
+                response_body = [section async for section in response.body_iterator]
+                logging.info(f"Response Body: {response_body}")
+            except Exception as e:
+                logging.error(f"Error reading response body: {e}")
     return response
 
 
